@@ -10,7 +10,6 @@ from openpyxl import Workbook, load_workbook
 #get_asian()
 #get_commodities()
 #get_forex()
-#get_bonds()
 #get_recommendation()
 
 #ALL BASE IN INVESTING.COM
@@ -110,16 +109,6 @@ def bank_percentage(bank):
     web = float(web)
     return web
 
-def bonds_percentage(country,year):
-    url = 'https://www.investing.com/rates-bonds/'+country+'-'+ year +'-year-bond-yield'
-    r = requests.get(url)
-    web = BeautifulSoup(r.text, 'html.parser')
-    web = web.find('div', class_='top bold inlineblock').text
-    web_price = float(web[:6])
-    web_change = float(web[7:13])
-    web_percentage = float(web[17:-2])
-
-    return web_percentage
 
 def forex_percentage():
     url = 'https://www.investing.com/currencies/usd-php'
@@ -166,15 +155,6 @@ def get_forex():
     print(f"####################### FOREX #######################\n")
     
     
-
-def get_bonds():
-    print(f"US 10 Year Bond Yield: {bonds_percentage('u.s.', '10')} %")
-    print(f"US 5 Year Bond Yield: {bonds_percentage('u.s.', '5')} %")
-    print(f"PH 10 Year Bond Yield: {bonds_percentage('philippines', '10')} %")
-    print(f"PH 5 Year Bond Yield: {bonds_percentage('philippines', '5')} %")
-    print(f"PH 1 Year Bond Yield: {bonds_percentage('philippines', '1')} %")
-    print('________________________________________\n')
-    
 ########################################################### RECOMMENDATION ###########################################################
 
 def get_recommendation():
@@ -187,36 +167,6 @@ def get_recommendation():
     elif index_percentage('us-30') <= -1.3:
         print(f"WATCHOUT for {bluechip_stocks}!! DJI is down {index_percentage('us-30')}% \nIf you do not have {bluechip_stocks} you might consider to buy today.\n________________________________________\n" )
 
-    #################################
-    if bonds_percentage('u.s.', '10') > 1.5:
-        print(f"US 10 Year Treasury Yield Up {bonds_percentage('u.s.', '10')} %")
-    
-    elif bonds_percentage('u.s.', '10') < -1.5:
-        print(f"US 10 Year Treasury Yield Down {bonds_percentage('u.s.', '10')} %")
-    
-    if bonds_percentage('u.s.', '5') > 1.5:
-        print(f"US 5 Year Treasury Yield Up {bonds_percentage('u.s.', '5')} %")
-    
-    elif bonds_percentage('u.s.', '5') < -1.5:
-        print(f"US 5 Year Treasury Yield Down {bonds_percentage('u.s.', '5')} %")
-    
-    if bonds_percentage('philippines', '10') > 1.5:
-        print(f"Philippine 10 Year Treasury Yield Up {bonds_percentage('philippines', '10')} %")
-        
-    elif bonds_percentage('philippines', '10') < -1.5:
-        print(f"Philippine 10 Year Treasury Yield Down {bonds_percentage('philippines', '10')} %")
-    
-    if bonds_percentage('philippines', '5') > 1.5:
-        print(f"Philippine 5 Year Treasury Yield Up {bonds_percentage('philippines', '5')} %")
-    
-    elif bonds_percentage('philippines', '5') < -1.5:
-        print(f"Philippine 5 Year Treasury Yield Down {bonds_percentage('philippines', '5')} %")
-        
-    if bonds_percentage('philippines', '1') > 1.5:
-        print(f"Philippine 1 Year Treasury Yield Up {bonds_percentage('philippines', '1')} %")
-    
-    elif bonds_percentage('philippines', '1') < -1.5:
-        print(f"Philippine 1 Year Treasury Yield Down {bonds_percentage('philippines', '1')} %")
     
     if commodities_percentage('nickel?cid=959208') > 1.5:
         print(f"COMMODITIES: \nNickel Futures(Commodity): {commodities_percentage('nickel?cid=959208')}% \nShould Look into:\n{nickel_stocks}\nIf you have {nickel_stocks} you might want to sell your position today.\nCharts Here: https://www.investing.com/commodities/nickel-streaming-chart?cid=959208\n________________________________________\n")
@@ -320,7 +270,6 @@ def get_fs(url,stock):
 def get_global():
     get_commodities()
     get_forex()
-   # get_bonds()
     get_equity()
 
 
@@ -338,10 +287,6 @@ def update_excel():
     ws['E10'] = coal_percentage('coal')
     ws['E11'] = get_palm()
     ws['E14'] = forex_percentage()
-   # ws['E17'] = bonds_percentage('u.s.', '10')
-   # ws['E18'] = bonds_percentage('u.s.', '5')
-  #  ws['E19'] = bonds_percentage('philippines', '10')
-   # ws['E20'] = bonds_percentage('philippines', '5')
     ws['H6'] = index_percentage('us-30')
     ws['H7'] = index_percentage('nasdaq-composite')
     ws['H11'] = index_percentage('japan-ni225')
@@ -367,13 +312,10 @@ get_global()
 
 #get_commodities()
 #get_forex()
-#get_bonds()
 #get_equity()
 
 #update_excel()
-
+time.sleep(5)
 get_recommendation()
 
 #get_fs('https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=639', 'dnl')
-
-
