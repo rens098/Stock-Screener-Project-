@@ -4,6 +4,10 @@ import time
 import pandas as pd
 from openpyxl import Workbook, load_workbook
 
+
+
+
+
 #get_global()
 #get_equity()
 #get_fs()
@@ -99,15 +103,15 @@ def get_palm():
     return palm_percentage
 
 
-def bank_percentage(bank):
-    url = 'https://www.investing.com/equities/' + bank
-    r = requests.get(url)
-
-    web = BeautifulSoup(r.text, 'html.parser')
-    web = web.find('div', class_='text-xl flex items-end flex-wrap').text
-    web = web[-7:-2]
-    web = float(web)
-    return web
+#def bank_percentage(bank):
+#    url = 'https://www.investing.com/equities/' + bank
+#    r = requests.get(url)
+#
+#    web = BeautifulSoup(r.text, 'html.parser')
+#    web = web.find('div', class_='text-xl flex items-end flex-wrap').text
+#    web = web[-7:-2]
+#    web = float(web)
+#    return web
 
 
 def forex_percentage():
@@ -121,9 +125,9 @@ def forex_percentage():
 
     return web_percentage
 
-bank = {bank_percentage('jp-morgan-chase') : 'JP MORGAN CHASE'}
+#bank = {bank_percentage('jp-morgan-chase') : 'JP MORGAN CHASE'}
 
-bank_list_percentage = [bank_percentage('jp-morgan-chase'), bank_percentage('bank-of-america'), bank_percentage('wells-fargo'), bank_percentage('citigroup'), bank_percentage('us-bancorp'), bank_percentage('bb-t-corp'), bank_percentage('pnc-fin-serv'), bank_percentage('toronto-dominion-bank?cid=20605'), bank_percentage('capital-one'), bank_percentage('bk-of-ny')]
+#bank_list_percentage = [bank_percentage('jp-morgan-chase'), bank_percentage('bank-of-america'), bank_percentage('wells-fargo'), bank_percentage('citigroup'), bank_percentage('us-bancorp'), bank_percentage('bb-t-corp'), bank_percentage('pnc-fin-serv'), bank_percentage('toronto-dominion-bank?cid=20605'), bank_percentage('capital-one'), bank_percentage('bk-of-ny')]
 
 
 
@@ -132,10 +136,10 @@ bank_list_percentage = [bank_percentage('jp-morgan-chase'), bank_percentage('ban
 
 def get_equity():
     print(f"INDICES: \nDow Jones: {indices_info('us-30')} \nNASDAQ: {indices_info('nasdaq-composite')} ")
-
+#
     print('________________________________________\n')
-
-    print(f"BANKS: \nJP MORGAN CHASE: {bank_info('jp-morgan-chase')} % \nBANK OF AMERICA: {bank_info('bank-of-america')} % \nWELLS FARGO: {bank_info('wells-fargo')} % \nCITIGROUP: {bank_info('citigroup')} % \nUS BANCORP: {bank_info('us-bancorp')} % \nTRUIST FINANCIAL CORP: {bank_info('bb-t-corp' )} % \nPNC FINANCIAL: {bank_info('pnc-fin-serv')} % \nTORONTO DOMINION BANK: {bank_info('toronto-dominion-bank?cid=20605')} % \nCAPITAL ONE FINANCIAL CORP: {bank_info('capital-one')} % \nBANK OF NEW YORK MELLON: {bank_info('bk-of-ny')} %\n\n")
+#
+#    print(f"BANKS: \nJP MORGAN CHASE: {bank_info('jp-morgan-chase')} % \nBANK OF AMERICA: {bank_info('bank-of-america')} % \nWELLS FARGO: {bank_info('wells-fargo')} % \nCITIGROUP: {bank_info('citigroup')} % \nUS BANCORP: {bank_info('us-bancorp')} % \nTRUIST FINANCIAL CORP: {bank_info('bb-t-corp' )} % \nPNC FINANCIAL: {bank_info('pnc-fin-serv')} % \nTORONTO DOMINION BANK: {bank_info('toronto-dominion-bank?cid=20605')} % \nCAPITAL ONE FINANCIAL CORP: {bank_info('capital-one')} % \nBANK OF NEW YORK MELLON: {bank_info('bk-of-ny')} %\n\n")
 
 def get_commodities():
 
@@ -208,29 +212,29 @@ def get_recommendation():
     elif get_palm() < -1.5:
         print(f"COMMODITIES: Palm Oil: Down {get_palm()} %\nDown Price is positive to {palm_stock}\nYou might want to consider selling today\nFinancial Reports for MONDE:https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=682\nFinancial Reports for URC: https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=124\nFinancial Reports for DNL: https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=639\n_________________________________")
         
-    bankpositive = []
-    banknegative = []
-    for bank_list in bank_list_percentage:
-        if bank_list > 1.3:
-            bankpositive.append(bank_list)
-        
-        elif bank_list <= -1.3:
-            banknegative.append(bank_list)
-        
-    if len(bankpositive) >= 4:
-        print(f"There are 5 or more positive in Banks \nShould look into:\n {bank_stocks}\nIf you have {bank_stocks} you might want to sell your position today.\n________________________________________ \n" )
-
-    elif len(banknegative) >= 4:
-        print(f"WATCHOUT for {bank_stocks} BANKS are down {len(banknegative)} items.\nIf you do not have {bank_stocks} you might consider to buy today.")
-        print(f"Financial Reports for BDO: https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=260")
-        print(f"Financial Reports for BPI: https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=234")
-        print(f"Financial Reports for CHIB: https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=184")
-        print(f"Financial Reports for EW: https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=634")
-        print(f"Financial Reports for MBT: https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=128")
-        print(f"Financial Reports for PNB: https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=139")
-        print(f"Financial Reports for SECB: https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=32")
-        print(f"Financial Reports for UBP: https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=167")
-        print('\n________________________________________\n')
+#    bankpositive = []
+#    banknegative = []
+#    for bank_list in bank_list_percentage:
+#        if bank_list > 1.3:
+#            bankpositive.append(bank_list)
+#        
+#        elif bank_list <= -1.3:
+#            banknegative.append(bank_list)
+#        
+#    if len(bankpositive) >= 4:
+#        print(f"There are 5 or more positive in Banks \nShould look into:\n {bank_stocks}\nIf you have {bank_stocks} you might want to sell your position today.\n________________________________________ \n" )
+#
+#    elif len(banknegative) >= 4:
+#        print(f"WATCHOUT for {bank_stocks} BANKS are down {len(banknegative)} items.\nIf you do not have {bank_stocks} you might consider to buy today.")
+#        print(f"Financial Reports for BDO: https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=260")
+#        print(f"Financial Reports for BPI: https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=234")
+#        print(f"Financial Reports for CHIB: https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=184")
+#        print(f"Financial Reports for EW: https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=634")
+#        print(f"Financial Reports for MBT: https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=128")
+#        print(f"Financial Reports for PNB: https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=139")
+#        print(f"Financial Reports for SECB: https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=32")
+#        print(f"Financial Reports for UBP: https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=167")
+#        print('\n________________________________________\n')
 
 def get_asian():
     print(f"SOME ASIAN MARKET AS OF THE MOMENT: \n\nJAPAN NIKKEI*: {indices_info('japan-ni225')}\nCHINA SHANGHAI(SSEC): {indices_info('shanghai-composite')}\nCHINA SZSE: {indices_info('szse-component')}\nCHINA SSE 100: {indices_info('sse-100')}\nHONGKONG HANG SENG*: {indices_info('hang-sen-40')}\nKOREA KOSPI*:{indices_info('kospi')}\nINDIA BSE SENSEX: {indices_info('sensex')}\nTAIWAN: {indices_info('taiwan-weighted')}\nAUSTRALIA ASX 200: {indices_info('aus-200')}\nPAKISTAN KARACHI 100: {indices_info('karachi-100')}")
@@ -269,9 +273,11 @@ def get_fs(url,stock):
 
 def get_global():
     get_commodities()
+    time.sleep(5)
     get_forex()
+    time.sleep(5)
     get_equity()
-
+#   time.sleep(5)
 
 
 
@@ -305,17 +311,16 @@ def update_excel():
 
 
 get_global()
-
+get_recommendation()
 #while True:
 #    get_asian()
 #    time.sleep(300)
 
-#get_commodities()
-#get_forex()
-#get_equity()
+#get_commodities()   #<----- included in get global / run if you want to only see commodities
+#get_forex()         #<----- included in get global / run if you want to only see forex
+#get_equity()        #<----- included in get global / run if you want to only see equity
 
 #update_excel()
-time.sleep(5)
-get_recommendation()
 
-#get_fs('https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=639', 'dnl')
+
+#get_fs('https://edge.pse.com.ph/companyPage/financial_reports_view.do?cmpy_id=625', 'nikl')
